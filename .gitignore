@@ -1,0 +1,24 @@
+/backend/target/
+*.class
+*.jar
+*.war
+*.log
+*.iml
+.idea/
+*.db
+backend/.env
+backend/application.properties
+backend/src/main/resources/application.properties
+backend/resources/application.properties
+
+# === Node / Angular ===
+/frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# === Global ===
+.DS_Store
+Thumbs.db
+.env
+.env.local
+application.properties
