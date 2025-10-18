@@ -23,6 +23,17 @@
           <mat-error>Check out date is required</mat-error>
         }
       </mat-form-field>
+      
+      @if (reservationsForm.errors?.['pastDate']) {
+        <div class="form-error">
+          <mat-error>Check-in date cannot be in the past</mat-error>
+        </div>
+      }
+      @if (reservationsForm.errors?.['checkOutDateBeforeCheckInDate']) {
+        <div class="form-error">
+          <mat-error>Check-out date must be after check-in date</mat-error>
+        </div>
+      }
       <mat-form-field>
         <mat-label>Room</mat-label>
         <mat-select formControlName="room">

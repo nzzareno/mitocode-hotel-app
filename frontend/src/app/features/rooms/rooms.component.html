@@ -1,4 +1,8 @@
 <div class="demo-button-container">
+    <div class="indicator-container">
+      <div class="gold-indicator"></div>
+      <span class="indicator-text">For rooms already reserved, not available</span>
+    </div>
     <button matButton (click)="openAddNewRoomDialog()" class="add-new-room-button" [class.light-theme]="!isDarkMode()" [class.dark-theme]="isDarkMode()">
       ADD NEW ROOM
     </button>
@@ -37,9 +41,6 @@
             <option value="true">Yes</option>
             <option value="false">No</option>
           </select>
-          @if (!room.isAvailable) {
-            <mat-icon class="warning-icon" matTooltip="This room has active reservations">warning</mat-icon>
-          }
           @if (editingStates()[i]) {
             <button (click)="saveAvailability(i)" class="save-btn" mat-icon-button>
               <mat-icon>check</mat-icon>

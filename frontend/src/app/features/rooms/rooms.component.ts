@@ -1,5 +1,7 @@
-import { Component, inject, OnInit, signal, effect, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, effect, computed, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { RoomsService } from '../../core/services/rooms.service';
+import { RoomRefreshService } from '../../core/services/room-refresh.service';
 import { Room } from '../../core/models/room.model';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,17 +19,19 @@ import { AddNewRoomDialogComponent } from './add-new-room-dialog/add-new-room-di
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent implements OnInit, OnDestroy {
   protected readonly roomsService = inject(RoomsService);
+  protected readonly roomRefreshService = inject(RoomRefreshService);
   protected readonly themeService = inject(ThemeService);
   protected readonly snackBar = inject(MatSnackBar);
-  protected readonly dialog = inject(MatDialog);  
+  protected readonly dialog = inject(MatDialog);
   protected readonly rooms = signal<Room[]>([]);
   protected readonly displayedColumns = signal<string[]>(['roomNumber', 'type', 'pricePerNight', 'isAvailable']);
   protected readonly editingStates = signal<boolean[]>([]);
   protected readonly originalValues = signal<boolean[]>([]);
   protected readonly availabilityControls = signal<FormControl[]>([]);
   protected isDarkMode = computed(() => this.themeService.isDarkMode());
+  private refreshSubscription?: Subscription;
   
   constructor() {
     // Asegurar que el tema se aplique correctamente al inicializar
@@ -39,6 +43,20 @@ export class RoomsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadRooms();
+    // Suscribirse a las actualizaciones de rooms
+    this.refreshSubscription = this.roomRefreshService.getRefreshObservable().subscribe(trigger => {
+      if (trigger > 0) {
+        this.loadRooms();
+      }
+    });
+  }
+  ngOnDestroy() {
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+  }
+  private loadRooms() {
     this.roomsService.findAll().subscribe((rooms) => {
       const sortedRooms = rooms.sort((a, b) => {
         const numA = parseInt(a.roomNumber, 10);
@@ -101,20 +119,6 @@ export class RoomsComponent implements OnInit {
     const room = this.rooms()[index];
     const newValueString = this.availabilityControls()[index]?.value;
     const newValue = newValueString === 'true';
-
-    // Si está intentando marcar como disponible una habitación ocupada
-    if (!room.isAvailable && newValue) {
-      const confirmed = confirm(
-        `Room ${room.roomNumber} may have active reservations.\n\n` +
-        'Are you sure you want to mark it as available?\n\n'
-      );
-
-      if (!confirmed) {
-        // Revertir el cambio
-        this.availabilityControls()[index].setValue(String(room.isAvailable), { emitEvent: false });
-        return;
-      }
-    }
 
     // Activar modo de edición cuando se cambia el valor
     this.editingStates.update(prev => {

@@ -1,7 +1,35 @@
 .demo-button-container {
   margin-bottom: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.indicator-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gold-indicator {
+  width: 16px;
+  height: 16px;
+  background-color: #ffd700;
+  border: 1px solid #ffb300;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(255, 179, 0, 0.3);
+}
+
+.indicator-text {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+body.dark-theme .gold-indicator {
+  background-color: #ffd700;
+  border-color: #ffb300;
+  box-shadow: 0 1px 3px rgba(255, 179, 0, 0.4);
 }
 .demo-button {
   width: 200px;

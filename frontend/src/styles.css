@@ -84,3 +84,9 @@ body.dark-theme .add-new-room-button {
   background-color: white;
   color: black;
 }
+body.dark-theme .indicator-text {
+  color: white !important;
+}
+body.light-theme .indicator-text {
+  color: black !important;
+}

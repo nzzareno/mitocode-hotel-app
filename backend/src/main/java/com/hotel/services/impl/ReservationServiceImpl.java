@@ -31,7 +31,7 @@ public class ReservationServiceImpl implements IReservationService {
         if (!reservation.getRoom().getIsAvailable()) {
             throw new IllegalStateException("Room is not available for reservation");
         }
-        List<Reservation> existingReservations = reservationRepository.findByRoomId(reservation.getRoom().getId()).getReservations();
+        List<Reservation> existingReservations = reservationRepository.findByRoomId(reservation.getRoom().getId());
         for (Reservation existingReservation : existingReservations) {
             if (reservation.getCheckInDate().isBefore(existingReservation.getCheckOutDate()) &&
                 reservation.getCheckOutDate().isAfter(existingReservation.getCheckInDate())) {

@@ -7,7 +7,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../core/services/reservations.service';
+import { RoomsService } from '../../core/services/rooms.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { RoomRefreshService } from '../../core/services/room-refresh.service';
 import { Reservation } from '../../core/models/reservation.model';
 import { AddNewReservationDialogComponent } from './add-new-reservation-dialog/add-new-reservation-dialog.component';
 
@@ -19,7 +21,9 @@ import { AddNewReservationDialogComponent } from './add-new-reservation-dialog/a
 })
 export class ReservationsComponent {
   protected readonly reservationsService = inject(ReservationsService);
+  protected readonly roomsService = inject(RoomsService);
   protected readonly themeService = inject(ThemeService);
+  protected readonly roomRefreshService = inject(RoomRefreshService);
   protected readonly snackBar = inject(MatSnackBar);
   protected readonly dialog = inject(MatDialog);  
   protected readonly reservations = signal<Reservation[]>([]);
@@ -50,6 +54,8 @@ export class ReservationsComponent {
         this.reservationsService.create(result).subscribe({
           next: (createdReservation) => {
             this.reservations.set([...this.reservations(), createdReservation]);
+            // Disparar actualización de rooms
+            this.roomRefreshService.triggerRefresh();
             this.snackBar.open('Reservation created successfully', 'Close', {
               duration: 2000,
               panelClass: 'success-snackbar',

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReservationsService } from '../../../core/services/reservations.service';
@@ -31,7 +31,7 @@ export class AddNewReservationDialogComponent implements OnInit {
     checkInDate: ['', [Validators.required]],
     checkOutDate: ['', [Validators.required]],
     room: [null, [Validators.required]]
-  });
+  }, { validators: this.dateRangeValidator });
 
   ngOnInit() {
     // Cargar solo habitaciones disponibles
@@ -39,6 +39,26 @@ export class AddNewReservationDialogComponent implements OnInit {
       const available = rooms.filter(room => room.isAvailable);
       this.availableRooms.set(available);
     });
+  }
+  // Validator para verificar que la fecha de entrada es anterior a la fecha de salida y que la fecha de entrada es mayor o igual a la fecha actual
+  dateRangeValidator(group: AbstractControl): ValidationErrors | null {
+    const checkIn = group.get('checkInDate')?.value;
+    const checkOut = group.get('checkOutDate')?.value;
+    if (checkIn && checkOut) {
+      const checkInDate = new Date(checkIn + 'T00:00:00');
+      const checkOutDate = new Date(checkOut + 'T00:00:00');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      // Permitir que la fecha de check-in sea hoy o en el futuro
+      if (checkInDate < today) {
+        return { pastDate: true };
+      }
+      // Check-out debe ser después del check-in
+      if (checkOutDate <= checkInDate) {
+        return { checkOutDateBeforeCheckInDate: true };
+      }
+    }
+    return null;
   }
 
   saveReservation(): void {
