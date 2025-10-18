@@ -1,1 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body.light-theme {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+}
+body.light-theme .mat-mdc-tab-group,
+body.light-theme .mat-mdc-tab-header {
+  background-color: white;
+}
+  
+body.dark-theme .footer-text {
+  color: rgb(255, 255, 255) !important;
+}
+body.light-theme .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab__text-label {
+  color: rgba(0, 0, 0, 0.87);
+}
+body.light-theme .mat-mdc-tab .mdc-tab-indicator__content--underline {
+  border-color: #3f51b5 !important;
+}
+
+body.dark-theme {
+  background-color: #303030;
+  color: white;
+}
+body.dark-theme .mat-mdc-tab-group,
+body.dark-theme .mat-mdc-tab-header {
+  background-color: transparent;
+}
+body.dark-theme .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab__text-label {
+  color: white;
+}
+body.dark-theme .mat-mdc-tab .mdc-tab-indicator__content--underline {
+  border-color: #90caf9 !important;
+}
+
+/* Estilos adicionales para tabs activas */
+body.light-theme .mat-mdc-tab.mdc-tab--active .mdc-tab-indicator__content--underline {
+  border-color: #3f51b5 !important;
+}
+
+body.dark-theme .mat-mdc-tab.mdc-tab--active .mdc-tab-indicator__content--underline {
+  border-color: #90caf9 !important;
+}
+body.dark-theme .mat-mdc-tab-body-content {
+  background-color: #303030;
+  color: white;
+}
+
+/* Rooms component styles */
+body.light-theme .demo-table {
+  background-color: white;
+}
+body.dark-theme .demo-table {
+  background-color: #303030;
+}
+body.dark-theme .mat-mdc-header-cell {
+  color: white;
+  background-color: #303030;
+  border-bottom: 1px solid #424242;
+  border-top: 1px solid #424242;
+}
+body.dark-theme .mat-mdc-cell {
+  color: white;
+  background-color: #303030;
+}
+body.light-theme .add-new-room-button {
+  background-color: #3f51b5;
+  color: white;
+}
+body.dark-theme .add-new-room-button {
+  background-color: white;
+  color: black;
+}

@@ -1,0 +1,47 @@
+
+<h2 mat-dialog-title>Add new reservation</h2>
+<mat-dialog-content>
+    <form [formGroup]="reservationsForm">
+      <mat-form-field>
+        <mat-label>Customer Name</mat-label>
+        <input matInput formControlName="customerName" />
+        @if (reservationsForm.get('customerName')?.errors?.['required']) {
+          <mat-error>Customer name is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Check In Date</mat-label>
+        <input matInput type="date" formControlName="checkInDate" />
+        @if (reservationsForm.get('checkInDate')?.errors?.['required']) {
+          <mat-error>Check in date is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Check Out Date</mat-label>
+        <input matInput type="date" formControlName="checkOutDate" />
+        @if (reservationsForm.get('checkOutDate')?.errors?.['required']) {
+          <mat-error>Check out date is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Room</mat-label>
+        <mat-select formControlName="room">
+          @for (room of availableRooms(); track room.id) {
+            <mat-option [value]="room">
+              Room {{ room.roomNumber }} - {{ room.type }} (${{ room.pricePerNight }}/night)
+            </mat-option>
+          }
+          @empty {
+            <mat-option disabled>No available rooms</mat-option>
+          }
+        </mat-select>
+        @if (reservationsForm.get('room')?.errors?.['required']) {
+          <mat-error>Room is required</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions style="justify-content: space-between;">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!reservationsForm.valid" (click)="saveReservation()">Save</button>
+  </mat-dialog-actions>

@@ -5,7 +5,12 @@
   "projects": {
     "frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+          "@schematics/angular:component": { "type": "component" },
+          "@schematics/angular:service": { "type": "service" },
+          "@schematics/angular:module": { "typeSeparator": "." },
+          "@schematics/angular:pipe": { "typeSeparator": "." }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -22,6 +27,7 @@
               }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ]
           },
@@ -81,5 +87,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "11352d8b-8791-43d5-9cb3-3caa5043f7be"
   }
 }

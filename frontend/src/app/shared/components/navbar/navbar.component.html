@@ -1,0 +1,14 @@
+<mat-toolbar [class.dark-navbar]="isDarkMode" [class.light-navbar]="!isDarkMode">
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <mat-icon class="navbar-icon">hotel</mat-icon>
+      <span class="navbar-title">Hotel Reservation Manager</span>
+    </div>
+
+    <div class="navbar-right">
+      <button mat-icon-button (click)="toggleDarkMode()">
+        <mat-icon [class.dark-icon]="isDarkMode" [class.light-icon]="!isDarkMode">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

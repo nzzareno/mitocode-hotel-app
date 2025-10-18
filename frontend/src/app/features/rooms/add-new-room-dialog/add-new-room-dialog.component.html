@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Add new room</h2>
+<mat-dialog-content>
+    <form [formGroup]="roomsForm">
+      <mat-form-field>
+        <mat-label>Room Number</mat-label>
+        <input matInput formControlName="roomNumber" />
+        @if (roomsForm.get('roomNumber')?.errors?.['required']) {
+          <mat-error>Room number is required</mat-error>
+        }
+        @if (roomsForm.get('roomNumber')?.errors?.['pattern']) {
+          <mat-error>Room number must be a number</mat-error>
+        }
+        @if (roomsForm.get('roomNumber')?.errors?.['minlength']) {
+          <mat-error>Room number must be at least 1 character</mat-error>
+        }
+        @if (roomsForm.get('roomNumber')?.errors?.['maxlength']) {
+          <mat-error>Room number must be at most 3 characters</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+            <mat-option value="Simple">Single</mat-option>
+            <mat-option value="Double">Double</mat-option>
+            <mat-option value="Suite">Suite</mat-option>
+            <mat-option value="Presidential Suite">Presidential Suite</mat-option>
+        </mat-select>
+        @if (roomsForm.get('type')?.errors?.['required']) {
+          <mat-error>Type is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Price Per Night</mat-label>
+        <input matInput type="number" formControlName="pricePerNight" step="0.01" min="1" max="100000" />
+        @if (roomsForm.get('pricePerNight')?.errors?.['required']) {
+          <mat-error>Price per night is required</mat-error>
+        }
+        @if (roomsForm.get('pricePerNight')?.errors?.['min']) {
+          <mat-error>Price per night must be at least 1</mat-error>
+        }
+        @if (roomsForm.get('pricePerNight')?.errors?.['max']) {
+          <mat-error>Price per night must be at most 100000</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Is Available</mat-label>
+        <mat-select formControlName="isAvailable">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+        </mat-select>
+        @if (roomsForm.get('isAvailable')?.errors?.['required']) {
+          <mat-error>Is available is required</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions style="justify-content: space-between;">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!roomsForm.valid" (click)="saveRoom()">Save</button>
+  </mat-dialog-actions>

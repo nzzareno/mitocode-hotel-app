@@ -1,0 +1,131 @@
+.demo-button-container {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.demo-button {
+  width: 200px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+}
+.demo-table {
+  width: 100%;
+}
+
+.mdc-data-table__header-cell {
+  padding: 0 3px !important;
+}
+
+.mdc-data-table__cell {
+  padding: 0 3px !important;
+}
+
+/* Estilos para la celda de disponibilidad */
+.available-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.availability-select {
+  padding: 6px 24px 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-width: 70px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 20px;
+}
+
+.availability-select:focus {
+  outline: 2px solid #3f51b5;
+  outline-offset: 0;
+  border-color: #3f51b5;
+}
+
+.availability-select option {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+  padding: 8px;
+}
+
+.save-btn {
+  position: absolute !important;
+  right: 10px;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 0 !important;
+  background-color: #4caf50 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.save-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+/* Estilos para tema oscuro */
+body.dark-theme .availability-select {
+  background-color: #424242;
+  color: white;
+  border-color: #666;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+}
+
+body.dark-theme .availability-select option {
+  background-color: #424242;
+  color: white;
+}
+
+body.dark-theme .availability-select:focus {
+  outline-color: #90caf9;
+  border-color: #90caf9;
+}
+
+/* Estilos para habitaciones ocupadas */
+.availability-select.occupied-room {
+  border-left: 3px solid #ff9800;
+}
+
+body.dark-theme .availability-select.occupied-room {
+  border-left: 3px solid #ffa726;
+}
+
+/* Icono de advertencia para habitaciones ocupadas */
+.warning-icon {
+  color: #ff9800;
+  font-size: 20px;
+  margin-left: 8px;
+  cursor: help;
+  animation: pulse 2s infinite;
+}
+
+body.dark-theme .warning-icon {
+  color: #ffa726;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

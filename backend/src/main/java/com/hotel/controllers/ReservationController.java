@@ -1,13 +1,10 @@
 package com.hotel.controllers;
 
-import com.hotel.models.Room;
-import com.hotel.services.IRoomService;
+import com.hotel.models.Reservation;
+import com.hotel.services.IReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,17 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
 
-    private final IRoomService roomService;
+    private final IReservationService reservationService;
 
     @GetMapping
-    public ResponseEntity<List<Room>> findAll(){
-        List<Room> rooms = roomService.findAll();
-        return ResponseEntity.ok(rooms);
+    public ResponseEntity<List<Reservation>> findAll(){
+        List<Reservation> reservations = reservationService.findAll();
+        return ResponseEntity.ok(reservations);
     }
 
     @PostMapping
-    public ResponseEntity<Room> createRoom(Room room){
-        Room createdRoom = roomService.createRoom(room);
-        return ResponseEntity.ok(createdRoom);
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation){
+        Reservation createdReservation = reservationService.createReservation(reservation);
+        return ResponseEntity.ok(createdReservation);
     }
 }
